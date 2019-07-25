@@ -3,6 +3,12 @@
 Build all of your functions for displaying and gathering information below (GUI).
 */
 
+// make a let variable to determine who has descendants
+// make a let variable to determine every objects age
+// make a let variable to change id number to their names
+
+
+
 // app is the function called to start the entire application
 function app(people){
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
@@ -33,13 +39,16 @@ function mainMenu(person, people){
   var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
-    case "info":
+    case "info": // convert date of birth to actual age
+    displayPerson(person);
     // TODO: get person's info
     break;
     case "family":
-    // TODO: get person's family
+    displayFamily(person);
+    // TODO: get person's family convert spouse number to name and convert parents number to name
     break;
     case "descendants":
+    displayDescendant(person);
     // TODO: get person's descendants
     break;
     case "restart":
@@ -64,9 +73,9 @@ function searchByName(people){
       return false;
     }
   })
-  // TODO: find the person using the name they entered
-  return foundPerson;
+  return foundPerson[0];
 }
+  // TODO: find the person using the name they entered * Done
 
 // alerts a list of people
 function displayPeople(people){
@@ -80,9 +89,23 @@ function displayPerson(person){
   // height, weight, age, name, occupation, eye color.
   var personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
-  // TODO: finish getting the rest of the information to display
+  personInfo += "Gender:" + person.gender + "\n";
+  personInfo += "DOB:" + person.dob + "\n";
+  personInfo += "Height:" + person.height + "\n";
+  personInfo += "Weight:" + person.weight + "\n";
+  personInfo += "Eye Color:" + person.eyecolor + "\n";
+  personInfo += "Occupation:" + person.occupation + "\n";
+  // TODO: finish getting the rest of the information to display * Done
   alert(personInfo);
 }
+//
+function displayFamily(person){
+  var personFamily = "Parents: " + person.parents + "\n";
+  personFamily += "CurrentSpouse: " + person.currentSpouse + "\n";
+  alert(personFamily);
+}
+//
+
 
 // function that prompts and validates user input
 function promptFor(question, valid){
@@ -101,3 +124,12 @@ function yesNo(input){
 function chars(input){
   return true; // default validation only
 }
+
+
+function displayDescendant(person){
+  if((person.parents).length > 0){
+    for(let i = 0; i < parents.length; i++)
+    person.parents[i].descendant = person.id
+      }
+  }
+displayDescendant();
