@@ -15,7 +15,7 @@ function app(people){
       // TODO: search by traits
       break;
       default:
-    app(people); // restart app
+    app(people);
       break;
   }
 }
@@ -71,6 +71,7 @@ function searchByName(people){
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
+    //This map just adds a space between names
     return person.firstName + " " + person.lastName;
   }).join("\n"));
 }
