@@ -28,6 +28,7 @@ function app(people)
           switch (searchMultipleTraits)
       {
             case 'yes': // function for multiple traits
+            var multiple = multipleTraits(people);
             break;
             case 'no' :
             var singleTrait = oneTrait(people);
@@ -42,28 +43,6 @@ function app(people)
     app(people);
       break;
   }
-}
-
-function criteriaOneSuspects(person, people){
-
-  if(!people){
-    alert("Could not find that individual.");
-    return app(people); // restart
-  }
-var displaySuspects = prompt("Found" + person.firstname + " " + person.lastName + "\n" + "Do you want to know info,quit or restart?  Type your answer info, quit or restart")
-
-  switch(displaySuspects){
-    case "info": // convert date of birth to actual age
-    displayPerson(person);
-    break;
-    case "restart":
-    app(people); // restart
-    break;
-    case "quit":
-    return; // stop execution
-    default:
-    return criteriaOneSuspects(person, people); // ask again
-  } // ask again
 }
 
 // Menu function to call once you find who you are looking for
@@ -194,35 +173,20 @@ function oneTrait(people)
 }
 }
 // ======================================================================================================================================================
-function selectGender(people){
-
-var findGender = prompt("Is this person male or female")
-switch(findGender){
-  case 'male':
-  var maleArray = people.filter(function(person){
-    if (person.gender === findGender){
+function selectGender(people)
+{
+  var findGender = prompt("Please enter the person's gender male or female")
+  var genderArray = people.filter(function(person)
+  {
+    if (findGender === person.gender){
       return true;
     }
-    else{
+    else
+    {
       return false;
     }
   });
-  return(displayPeople(maleArray));
-  break;
-  case 'female':
-  var femaleArray = people.filter(function(person){
-    if (person.gender === findGender){
-      return true;
-    }
-    else{
-      return false;
-    }
-  });
-  return(displayPeople(femaleArray));
-  break;
-  default:
-  selectGender(people)
-  }
+    return(displayPeople(genderArray));
 }
 
 function selectHeight(people)
@@ -306,3 +270,7 @@ function selectAge(people)
 }
 
 //================================================================================================================================
+
+function multipleTraits(selectGender, selectHeight, selectWeight, selectEye, selectAge, selectOccupation){
+  alert(
+}
