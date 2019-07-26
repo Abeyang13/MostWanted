@@ -8,24 +8,38 @@ Build all of your functions for displaying and gathering information below (GUI)
 // make a let variable to change id number to their names
 
 
-
 // app is the function called to start the entire application
-function app(people){
+function app(people)
+{
+
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
-  switch(searchType){
+  switch(searchType)
+  {
     case 'yes':
       var foundPerson = searchByName(people);
       mainMenu(foundPerson, people);
       break;
     case 'no':
-    var oneCriteria = searchByCriteriaOne(people);
-    criteriaOneSuspects(oneCriteria, people);
-    //function to narrow the person down from one criteria
-    //then make another prompt to ask for more information to narrow group down to one person 
-      // TODO: search by traits
-      break;
+
+      var searchTrait = promptFor("Do you know any of this persons physical features?", yesNo).toLowerCase();
+      switch(searchTrait)
+    {
+        case 'yes':
+         var searchMultipleTraits = promptFor("Do you know multiple physical features?", yesNo).toLowerCase();
+          switch (searchMultipleTraits)
+      {
+            case 'yes': // function for multiple traits
+            break;
+            case 'no' :
+            function oneTrait(people)
+            break;
+      }
+       case 'no':
+         alert("Then what the fuck do you expect us to do")
+        break;
+    }
       default:
-    app(people); // restart app
+    app(people);
       break;
   }
 }
@@ -61,7 +75,6 @@ function mainMenu(person, people){
     alert("Could not find that individual.");
     return app(people); // restart
   }
-
   var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
@@ -106,6 +119,7 @@ function searchByName(people){
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
+    //This map just adds a space between names
     return person.firstName + " " + person.lastName;
   }).join("\n"));
 }
@@ -131,7 +145,10 @@ function displayFamily(person){
   alert(personFamily);
 }
 //
-
+function displayDescendants(person){
+  var personDescendants = "Descendants: " + person.descendants;
+  alert(personDescendants);
+}
 
 // function that prompts and validates user input
 function promptFor(question, valid){
@@ -151,19 +168,59 @@ function chars(input){
   return true; // default validation only
 }
 
+function selectGenger(people){
 
-//function to search one criteria of person I'm looking for
-function searchByCriteriaOne(people){
-  var criteriaOne = promptFor("Is person male or female?", chars);
-  
-  var foundSuspects = people.filter(function(person){
-    if(person.gender === criteriaOne){
+var findGender = prompt("Is this person male or female")
+switch(findGender){
+  case 'male':
+  people.filter(function(person){
+    if (person.gender === findGender){
       return true;
     }
     else{
       return false;
     }
-  })
-  return foundSuspects;
+    break;
+  });
+  case 'female':
+  people.filter(function(person){
+    if (person.gender === findGender){
+      return true;
+    }
+    else{
+      return false;
+    }
+    break;
+  });
+  default:
+  selectGender(people)
+  }
+  alert(findGender);
+}
+
+function oneTrait(people){
+  var singleTrait = prompt("What information about this person do you know?\ngender\nage\nheight\nweight\neye color\noccupation")
+
+  switch(singleTrait){
+  case 'gender':
+  selectGender(people);
+  break;
+  case 'age':
+  //function for age
+  break;
+  case 'height':
+  //function for height
+  break;
+  case 'weight':
+  //function for weight
+  break;
+  case 'eye color':
+  //function for eye color
+  break;
+  case 'occupation':
+  //function for occupation
+  break;
+  default:
+  oneTrait(people);
 }
 
