@@ -33,6 +33,7 @@ function app(people)
             var singleTrait = oneTrait(people);
             break;
       }
+      break;
       case 'no':
     alert("Then what the fuck do you expect us to do");
     break;
@@ -166,6 +167,33 @@ function chars(input){
   return true; // default validation only
 }
 
+function oneTrait(people)
+{
+  var singleTrait = prompt("What information about this person do you know?\ngender\nage\nheight\nweight\neye color\noccupation")
+  switch(singleTrait){
+  case 'gender':
+  var genderArray = selectGender(people);
+  break;
+  case 'age':
+  var ageArray = selectAge(people);
+  break;
+  case 'height':
+  var heightArray = selectHeight(people);
+  break;
+  case 'weight':
+  var weightArray = selectWeight(people);
+  break;
+  case 'eye color':
+  var eyeArray = selectEye(people);
+  break;
+  case 'occupation':
+  var occupationArray = selectOccupation(people);
+  break;
+  default:
+  oneTrait(people);
+}
+}
+// ======================================================================================================================================================
 function selectGender(people){
 
 var findGender = prompt("Is this person male or female")
@@ -179,6 +207,7 @@ switch(findGender){
       return false;
     }
   });
+  return(displayPeople(maleArray));
   break;
   case 'female':
   var femaleArray = people.filter(function(person){
@@ -189,37 +218,91 @@ switch(findGender){
       return false;
     }
   });
+  return(displayPeople(femaleArray));
   break;
   default:
   selectGender(people)
   }
-  return(displayPeople(maleArray));
 }
 
-function oneTrait(people)
+function selectHeight(people)
 {
-  var singleTrait = prompt("What information about this person do you know?\ngender\nage\nheight\nweight\neye color\noccupation")
-  switch(singleTrait){
-  case 'gender':
-  var genderArray = selectGender(people);
-  break;
-  case 'age':
-  //function for age
-  break;
-  case 'height':
-  //function for height
-  break;
-  case 'weight':
-  //function for weight
-  break;
-  case 'eye color':
-  //function for eye color
-  break;
-  case 'occupation':
-  //function for occupation
-  break;
-  default:
-  oneTrait(people);
-}
+  var findHeight = prompt("Please enter the person's height in inches.")
+  var heightArray = people.filter(function(person)
+  {
+    if (findHeight == person.height){
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  });
+    return(displayPeople(heightArray));
 }
 
+function selectWeight(people)
+{
+  var findWeight = prompt("Please enter the person's weight in lbs.")
+  var weightArray = people.filter(function(person)
+  {
+    if (findWeight == person.weight){
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  });
+    return(displayPeople(weightArray));
+}
+
+function selectEye(people)
+{
+  var findEye = prompt("Please enter the person's eye color.")
+  var eyeArray = people.filter(function(person)
+  {
+    if (findEye === person.eyeColor){
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  });
+    return(displayPeople(eyeArray));
+}
+
+function selectOccupation(people)
+{
+  var findOccupation = prompt("Please enter the person's occupation.")
+  var occupationArray = people.filter(function(person)
+  {
+    if (findOccupation === person.occupation){
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  });
+    return(displayPeople(occupationArray));
+}
+
+function selectAge(people)
+{
+  var findAge = prompt("Please enter the person's age.")
+  var ageArray = people.filter(function(person)
+  {
+    if (findAge == person.age){
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  });
+    return(displayPeople(ageArray));
+}
+
+//================================================================================================================================
