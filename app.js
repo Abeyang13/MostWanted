@@ -18,12 +18,38 @@ function app(people){
       mainMenu(foundPerson, people);
       break;
     case 'no':
+    var oneCriteria = searchByCriteriaOne(people);
+    criteriaOneSuspects(oneCriteria, people);
+    //function to narrow the person down from one criteria
+    //then make another prompt to ask for more information to narrow group down to one person 
       // TODO: search by traits
       break;
       default:
     app(people); // restart app
       break;
   }
+}
+
+function criteriaOneSuspects(person, people){
+
+  if(!people){
+    alert("Could not find that individual.");
+    return app(people); // restart
+  }
+var displaySuspects = prompt("Found" + person.firstname + " " + person.lastName + "\n" + "Do you want to know info,quit or restart?  Type your answer info, quit or restart")
+
+  switch(displaySuspects){
+    case "info": // convert date of birth to actual age
+    displayPerson(person);
+    break;
+    case "restart":
+    app(people); // restart
+    break;
+    case "quit":
+    return; // stop execution
+    default:
+    return criteriaOneSuspects(person, people); // ask again
+  } // ask again
 }
 
 // Menu function to call once you find who you are looking for
@@ -126,10 +152,18 @@ function chars(input){
 }
 
 
-function displayDescendant(person){
-  if((person.parents).length > 0){
-    for(let i = 0; i < parents.length; i++)
-    person.parents[i].descendant = person.id
-      }
-  }
-displayDescendant();
+//function to search one criteria of person I'm looking for
+function searchByCriteriaOne(people){
+  var criteriaOne = promptFor("Is person male or female?", chars);
+  
+  var foundSuspects = people.filter(function(person){
+    if(person.gender === criteriaOne){
+      return true;
+    }
+    else{
+      return false;
+    }
+  })
+  return foundSuspects;
+}
+
