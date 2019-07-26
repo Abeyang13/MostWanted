@@ -19,6 +19,7 @@ function app(people)
       mainMenu(foundPerson, people);
       break;
     case 'no':
+
       var searchTrait = promptFor("Do you know any of this persons physical features?", yesNo).toLowerCase();
       switch(searchTrait)
     {
@@ -40,6 +41,28 @@ function app(people)
     app(people);
       break;
   }
+}
+
+function criteriaOneSuspects(person, people){
+
+  if(!people){
+    alert("Could not find that individual.");
+    return app(people); // restart
+  }
+var displaySuspects = prompt("Found" + person.firstname + " " + person.lastName + "\n" + "Do you want to know info,quit or restart?  Type your answer info, quit or restart")
+
+  switch(displaySuspects){
+    case "info": // convert date of birth to actual age
+    displayPerson(person);
+    break;
+    case "restart":
+    app(people); // restart
+    break;
+    case "quit":
+    return; // stop execution
+    default:
+    return criteriaOneSuspects(person, people); // ask again
+  } // ask again
 }
 
 // Menu function to call once you find who you are looking for
@@ -199,3 +222,4 @@ function oneTrait(people)
   oneTrait(people);
 }
 }
+
