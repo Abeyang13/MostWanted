@@ -11,7 +11,6 @@ Build all of your functions for displaying and gathering information below (GUI)
 // app is the function called to start the entire application
 function app(people)
 {
-
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(searchType)
   {
@@ -30,13 +29,13 @@ function app(people)
             case 'yes': // function for multiple traits
             break;
             case 'no' :
-            function oneTrait(people)
-           break;
+            var singleTrait = oneTrait(people);
+            break;
       }
-    }
-    case 'no':
-    alert("Then what the fuck do you expect us to do")
+      case 'no':
+    alert("Then what the fuck do you expect us to do");
     break;
+    }
       default:
     app(people);
       break;
@@ -53,7 +52,6 @@ function mainMenu(person, people){
     return app(people); // restart
   }
   var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
-}
   switch(displayOption){
     case "info": // convert date of birth to actual age
     displayPerson(person);
@@ -145,42 +143,42 @@ function chars(input){
   return true; // default validation only
 }
 
-function selectGenger(people){
+function selectGender(people){
 
 var findGender = prompt("Is this person male or female")
 switch(findGender){
   case 'male':
-  people.filter(function(person){
+  var maleArray = people.filter(function(person){
     if (person.gender === findGender){
       return true;
     }
     else{
       return false;
     }
-    break;
   });
+  break;
   case 'female':
-  people.filter(function(person){
+  var femaleArray = people.filter(function(person){
     if (person.gender === findGender){
       return true;
     }
     else{
       return false;
     }
-    break;
   });
+  break;
   default:
   selectGender(people)
   }
-  alert(findGender);
+  return(displayPeople(maleArray));
 }
 
-function oneTrait(people){
+function oneTrait(people)
+{
   var singleTrait = prompt("What information about this person do you know?\ngender\nage\nheight\nweight\neye color\noccupation")
-
   switch(singleTrait){
   case 'gender':
-  selectGender(people);
+  var genderArray = selectGender(people);
   break;
   case 'age':
   //function for age
@@ -199,4 +197,5 @@ function oneTrait(people){
   break;
   default:
   oneTrait(people);
+}
 }
