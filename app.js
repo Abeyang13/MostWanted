@@ -150,6 +150,7 @@ function displayPerson(person){
 function displayFamily(person){
   var personFamily = "Parents: " + person.parents + "\n";
   personFamily += "CurrentSpouse: " + person.currentSpouse + "\n";
+  personFamily += "Children: " + person.children + "\n";
   alert(personFamily);
 }
 //
@@ -371,9 +372,19 @@ function multipleTraits(people){
   if(occupation.length === 0){
     alert("Can't find the person you're looking for")
   }
-  else{
+  else if(occupation.length === 1)
+  {
     return displayPeople(occupation);
   }
+  else{
+  var age = selectAge(occupation);
+  if(age.length === 0){
+  alert("Can't find the person you're looking for")
+  }
+  else{
+    return displayPeople(age);
+  }
+}
 }
 }
 }
