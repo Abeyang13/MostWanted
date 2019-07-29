@@ -22,6 +22,7 @@ Build all of your functions for displaying and gathering information below (GUI)
 
 function app(people)
 {
+
   function addAge()
 {
 for (let i = 0; i < people.length; i++)
@@ -37,7 +38,8 @@ if (monthMath < 0 || (monthMath === 0 && today.getDate() < birthDate.getDate()))
 people[i].age = age;
 }
 }
-addAge(people)
+addAge(people);
+
 
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(searchType)
@@ -93,7 +95,8 @@ function mainMenu(person, people){
     // TODO: get person's family convert spouse number to name and convert parents number to name
     break;
     case "descendants":
-    displayDescendant(person);
+    var thing = displayDescendants(person, people);
+    displayPeople(thing);
     // TODO: get person's descendants
     break;
     case "restart":
@@ -142,30 +145,30 @@ function displayPerson(person){
   personInfo += "Eye Color:" + person.eyecolor + "\n";
   personInfo += "Occupation:" + person.occupation + "\n";
   personInfo += "Age: " + person.age + "\n";
-  personInfo += "Descendants" + descendants(people) + "\n";
   // TODO: finish getting the rest of the information to display * Done
   alert(personInfo);
 }
 //
-function displayFamily(person){
-  var personFamily = "Parents: " + person.parents + "\n";
-  personFamily += "CurrentSpouse: " + person.currentSpouse + "\n";
-  alert(personFamily);
-}
-//
-var parentsId = descendants();
-function descendants(people){
-  return displayPeople();
-  if(person.parents === 0){
-  }
-  else{
-      return displayPeople(person.push)
-  }
-}
-descendants();
+// function displayFamily(person){
+//   var personFamily = "Parents: " + person.parents + "\n";
+//   personFamily += "CurrentSpouse: " + person.currentSpouse + "\n";
+//   return displayPeople(personFamily);
+// }
 
-  // var personDescendants = "Descendants: " + person.descendants;
-  // alert(personDescendants);
+function displayDescendants(person, people, descendantsArray = []){
+  //I want to take an person id and compare it to see if their id matches any of the other objects id in the people array.
+  //Then I want to push the people ids that were a match to the person id and push them as childrens
+  //Then when all children array are put into the person id.
+  //I want to call the person again and see if their children has children.  if they do return them into the person's children array
+  //Have to make a break in recursion to stop looking 
+  people.map(function(el){
+    if(el.parents[0] == person.id || el.parents[1] == person.id){
+      descendantsArray.push(el);
+      displayDescendants(el, people, descendantsArray);
+    }
+  });
+  return descendantsArray;
+}
 
 // function that prompts and validates user input
 function promptFor(question, valid){
