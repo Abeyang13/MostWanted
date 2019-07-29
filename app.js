@@ -7,10 +7,26 @@ Build all of your functions for displaying and gathering information below (GUI)
 // make a let variable to determine every objects age
 // make a let variable to change id number to their names
 
-
 // app is the function called to start the entire application
 function app(people)
 {
+  function addAge()
+{
+for (let i = 0; i < people.length; i++)
+{
+var today = new Date();
+var birthDate = new Date(people[i].dob)
+var age = today.getFullYear() - birthDate.getFullYear();
+var monthMath = today.getMonth() - birthDate.getMonth();
+if (monthMath < 0 || (monthMath === 0 && today.getDate() < birthDate.getDate()))
+{
+  age--;
+}
+people[i].age = age;
+}
+}
+addAge(people)
+
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(searchType)
   {
@@ -27,7 +43,8 @@ function app(people)
          var searchMultipleTraits = promptFor("Do you know multiple physical features?", yesNo).toLowerCase();
           switch (searchMultipleTraits)
       {
-            case 'yes': // function for multiple traits
+            case 'yes':
+            var multipleTrait = multipleTraits(selectGender(people), genderArray, selectHeightMultiDone)
             break;
             case 'no' :
             var singleTrait = oneTrait(people);
@@ -35,35 +52,13 @@ function app(people)
       }
       break;
       case 'no':
-    alert("Then what the fuck do you expect us to do");
+    alert("Then what do you expect us to do");
     break;
     }
       default:
     app(people);
       break;
   }
-}
-
-function criteriaOneSuspects(person, people){
-
-  if(!people){
-    alert("Could not find that individual.");
-    return app(people); // restart
-  }
-var displaySuspects = prompt("Found" + person.firstname + " " + person.lastName + "\n" + "Do you want to know info,quit or restart?  Type your answer info, quit or restart")
-
-  switch(displaySuspects){
-    case "info": // convert date of birth to actual age
-    displayPerson(person);
-    break;
-    case "restart":
-    app(people); // restart
-    break;
-    case "quit":
-    return; // stop execution
-    default:
-    return criteriaOneSuspects(person, people); // ask again
-  } // ask again
 }
 
 // Menu function to call once you find who you are looking for
@@ -134,6 +129,7 @@ function displayPerson(person){
   personInfo += "Weight:" + person.weight + "\n";
   personInfo += "Eye Color:" + person.eyecolor + "\n";
   personInfo += "Occupation:" + person.occupation + "\n";
+  personInfo += "Age: " + person.age;
   // TODO: finish getting the rest of the information to display * Done
   alert(personInfo);
 }
@@ -173,57 +169,49 @@ function oneTrait(people)
   switch(singleTrait){
   case 'gender':
   var genderArray = selectGender(people);
+  displayPeople(genderArray);
   break;
   case 'age':
   var ageArray = selectAge(people);
+  displayPeople(ageArray);
   break;
   case 'height':
   var heightArray = selectHeight(people);
+  displayPeople(heightArray);
   break;
   case 'weight':
   var weightArray = selectWeight(people);
+  displayPeople(weightArray);
   break;
   case 'eye color':
   var eyeArray = selectEye(people);
+  displayPeople(eyeArray);
   break;
   case 'occupation':
   var occupationArray = selectOccupation(people);
-  break;
+  displayPeople(occupationArray);
   default:
   oneTrait(people);
 }
 }
 // ======================================================================================================================================================
 function selectGender(people){
-
-var findGender = prompt("Is this person male or female")
-switch(findGender){
-  case 'male':
-  var maleArray = people.filter(function(person){
-    if (person.gender === findGender){
+  var findGender = prompt("Is the person male or female?")
+  var genderArray = people.filter(function(person)
+  {
+    if (findGender == person.gender){
       return true;
     }
-    else{
+    else
+    {
       return false;
     }
   });
-  return(displayPeople(maleArray));
-  break;
-  case 'female':
-  var femaleArray = people.filter(function(person){
-    if (person.gender === findGender){
-      return true;
-    }
-    else{
-      return false;
-    }
-  });
-  return(displayPeople(femaleArray));
-  break;
-  default:
-  selectGender(people)
-  }
+    return(genderArray);
 }
+
+// let test = selectGender(people);
+// let test2 = selectHeight(test);
 
 function selectHeight(people)
 {
@@ -238,7 +226,7 @@ function selectHeight(people)
       return false;
     }
   });
-    return(displayPeople(heightArray));
+    return(heightArray);
 }
 
 function selectWeight(people)
@@ -254,7 +242,7 @@ function selectWeight(people)
       return false;
     }
   });
-    return(displayPeople(weightArray));
+    return(weightArray);
 }
 
 function selectEye(people)
@@ -270,7 +258,7 @@ function selectEye(people)
       return false;
     }
   });
-    return(displayPeople(eyeArray));
+    return(eyeArray);
 }
 
 function selectOccupation(people)
@@ -286,7 +274,7 @@ function selectOccupation(people)
       return false;
     }
   });
-    return(displayPeople(occupationArray));
+    return(occupationArray);
 }
 
 function selectAge(people)
@@ -302,7 +290,31 @@ function selectAge(people)
       return false;
     }
   });
-    return(displayPeople(ageArray));
+    return(ageArray);
 }
 
 //================================================================================================================================
+function selectHeightMulti(genderArray)
+{
+  var findHeightMulti = prompt("Please enter the person's height in inches.")
+  var heightArrayMulti = genderArray.filter(function(person)
+  {
+    if (findHeightMulti == person.height){
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  });
+    return(heightArrayMulti);
+}
+
+function multipleTraits(people, callback){
+{
+ console.log(heightArrayMulti)
+  callback();
+}
+     var selectGenderDone = selectHeightMulti(genderArray)
+      var selectHeightMultiDone = selectWeight(heightArrayMulti)
+      };
