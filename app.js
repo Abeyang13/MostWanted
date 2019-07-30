@@ -91,7 +91,8 @@ function mainMenu(person, people){
     // TODO: get person's info
     break;
     case "family":
-    displayFamily(person);
+    var elFamilia = displayFamily(person, people);
+    displayPeople(elFamilia);
     // TODO: get person's family convert spouse number to name and convert parents number to name
     break;
     case "descendants":
@@ -142,25 +143,30 @@ function displayPerson(person){
   personInfo += "DOB:" + person.dob + "\n";
   personInfo += "Height:" + person.height + "\n";
   personInfo += "Weight:" + person.weight + "\n";
-  personInfo += "Eye Color:" + person.eyecolor + "\n";
+  personInfo += "Eye Color:" + person.eyeColor + "\n";
   personInfo += "Occupation:" + person.occupation + "\n";
   personInfo += "Age: " + person.age + "\n";
   // TODO: finish getting the rest of the information to display * Done
   alert(personInfo);
 }
-//
-// function displayFamily(person){
-//   var personFamily = "Parents: " + person.parents + "\n";
-//   personFamily += "CurrentSpouse: " + person.currentSpouse + "\n";
-//   return displayPeople(personFamily);
-// }
+
+function displayFamily(person,people){
+  var parents = displayParents(person,people);
+  alert("Parents Are");
+  displayPeople(parents);
+  var spouse = displaySpouse(person,people);
+  alert("Spouse Are");
+  displayPeople(spouse);
+  var children = displayChildren(person,people);
+  alert("Children Are")
+  displayPeople(children);
+  var siblings = displaySiblings(person,people);
+  alert("Siblings Are");
+  displayPeople(siblings);
+}
+  
 
 function displayDescendants(person, people, descendantsArray = []){
-  //I want to take an person id and compare it to see if their id matches any of the other objects id in the people array.
-  //Then I want to push the people ids that were a match to the person id and push them as childrens
-  //Then when all children array are put into the person id.
-  //I want to call the person again and see if their children has children.  if they do return them into the person's children array
-  //Have to make a break in recursion to stop looking 
   people.map(function(el){
     if(el.parents[0] == person.id || el.parents[1] == person.id){
       descendantsArray.push(el);
@@ -382,3 +388,44 @@ function multipleTraits(people){
 }
 }
 }
+
+
+function displayParents(person, people){
+ var parents = people.filter(function(el){
+    if(person.parents[0] === el.id || person.parents[1] === el.id){
+      return true;
+    }
+    else{
+      return false;
+    }
+  });
+  return parents;
+}
+function displaySpouse(person, people){
+  var spouse = people.filter(function(el){
+    if(person.currentSpouse === el.id){
+      return true;
+    }
+    else{
+      return false;
+    }
+  });
+  return(spouse);
+}
+function displayChildren(person, people, childrenArray = []){
+  people.map(function(el){
+    if(el.parents[0] === person.id || el.parents[1] === person.id){
+      childrenArray.push(el);
+    }
+  });
+  return childrenArray;
+}
+function displaySiblings(person, people, siblingsArray = []){
+ people.map(function(el){
+    if(person.parents.length >= 1 && person.parents[0] === el.parents[0] || person.parents.length >= 1 && person.parents[1] === el.parents[1]){
+      siblingsArray.push(el);
+    }
+  });
+  return siblingsArray;
+}
+
