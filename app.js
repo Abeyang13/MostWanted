@@ -91,9 +91,7 @@ function mainMenu(person, people){
     displayPerson(person);
     break;
     case "family":
-    var elFamilia = displayFamily(person, people);
-    displayPeople(elFamilia);
-    // TODO: get person's family convert spouse number to name and convert parents number to name
+    displayFamily(person, people);
     break;
     case "descendants":
     var descendantsList = displayDescendants(person, people);
@@ -420,6 +418,7 @@ function displayChildren(person, people, childrenArray = []){
   });
   return childrenArray;
 }
+
 function displaySiblings(person, people, siblingsArray = []){
  people.map(function(el){
   for(var i = 0; i<person.parents.length; i++)
@@ -432,3 +431,4 @@ function displaySiblings(person, people, siblingsArray = []){
   });
   return siblingsArray;
 }
+
