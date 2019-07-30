@@ -57,7 +57,7 @@ addAge(people);
          var searchMultipleTraits = promptFor("Do you know multiple physical features?", yesNo).toLowerCase();
           switch (searchMultipleTraits)
       {
-            case 'yes': // function for multiple traits
+            case 'yes':
             var multipleArray = multipleTraits(people);
             break;
             case 'no' :
@@ -66,7 +66,8 @@ addAge(people);
       }
       break;
       case 'no':
-    alert("Then what do you expect us to do");
+    alert("Here is a list of everybody. Good luck!");
+    displayPeople(people);
     break;
     }
       default:
@@ -86,9 +87,8 @@ function mainMenu(person, people){
   }
   var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
   switch(displayOption){
-    case "info": // convert date of birth to actual age
+    case "info":
     displayPerson(person);
-    // TODO: get person's info
     break;
     case "family":
     var elFamilia = displayFamily(person, people);
@@ -96,9 +96,8 @@ function mainMenu(person, people){
     // TODO: get person's family convert spouse number to name and convert parents number to name
     break;
     case "descendants":
-    var thing = displayDescendants(person, people);
-    displayPeople(thing);
-    // TODO: get person's descendants
+    var descendantsList = displayDescendants(person, people);
+    displayPeople(descendantsList);
     break;
     case "restart":
     app(people); // restart
@@ -124,19 +123,15 @@ function searchByName(people){
   })
   return foundPerson[0];
 }
-  // TODO: find the person using the name they entered * Done
 
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
-    //This map just adds a space between names
     return person.firstName + " " + person.lastName;
   }).join("\n"));
 }
 
 function displayPerson(person){
-  // print all of the information about a person:
-  // height, weight, age, name, occupation, eye color.
   var personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
   personInfo += "Gender:" + person.gender + "\n";
@@ -146,9 +141,9 @@ function displayPerson(person){
   personInfo += "Eye Color:" + person.eyeColor + "\n";
   personInfo += "Occupation:" + person.occupation + "\n";
   personInfo += "Age: " + person.age + "\n";
-  // TODO: finish getting the rest of the information to display * Done
   alert(personInfo);
 }
+
 
 function displayFamily(person,people){
   var parents = displayParents(person,people);
@@ -229,7 +224,7 @@ function oneTrait(people)
 
 function selectGender(people)
 {
-  var findGender = prompt("Please enter the person's gender male or female.  Else enter the word skip")
+  var findGender = prompt("Please enter the person's gender male or female. If you do not know, enter the word skip")
   var genderArray = people.filter(function(person)
   {
     if (findGender === person.gender){
@@ -246,12 +241,9 @@ function selectGender(people)
     return(genderArray);
 }
 
-// let test = selectGender(people);
-// let test2 = selectHeight(test);
-
 function selectHeight(people)
 {
-  var findHeight = prompt("Please enter the person's height in inches.  Else enter the wor skip")
+  var findHeight = prompt("Please enter the person's height in inches. If you do not know, enter the word skip")
   var heightArray = people.filter(function(person)
   {
     if (findHeight == person.height){
@@ -270,7 +262,7 @@ function selectHeight(people)
 
 function selectWeight(people)
 {
-  var findWeight = prompt("Please enter the person's weight in lbs.  Else enter the word skip")
+  var findWeight = prompt("Please enter the person's weight in lbs. If you do not know, enter the word skip")
   var weightArray = people.filter(function(person)
   {
     if (findWeight == person.weight){
@@ -289,7 +281,7 @@ function selectWeight(people)
 
 function selectEye(people)
 {
-  var findEye = prompt("Please enter the person's eye color.  Else enter the word skip")
+  var findEye = prompt("Please enter the person's eye color. If you do not know, enter the word skip")
   var eyeArray = people.filter(function(person)
   {
     if (findEye === person.eyeColor){
@@ -308,7 +300,7 @@ function selectEye(people)
 
 function selectOccupation(people)
 {
-  var findOccupation = prompt("Please enter the person's occupation.  Else enter the word skip")
+  var findOccupation = prompt("Please enter the person's occupation. If you do not know, enter the word skip")
   var occupationArray = people.filter(function(person)
   {
     if (findOccupation === person.occupation){
@@ -341,52 +333,60 @@ function selectAge(people)
     return(ageArray);
 }
 
-//================================================================================================================================
-//potential to improve user experience after we're done with other stuff.  it still works
 function multipleTraits(people){
-  var gender = selectGender(people);
-  if(gender.length === 0){
-    alert("Can't find the person you're looking for")
-  }
-  else if(gender.length === 1){
-    return displayPeople(gender);
-  }
-  else{
-    var height = selectHeight(gender);
-    if(height.length === 0){
-      alert("Can't find the person you're looking for")
-    }
-    else if(height.length === 1){
-      return displayPeople(height);
-    }
-    else{
-      var weight = selectWeight(height);
-      if(weight.length === 0){
-        alert("Can't find the person you're looking for")
-      }
-      else if(weight.length === 1){
-        return displayPeople(weight);
-      }
-        else{
-      var eye = selectEye(weight);
-      if(eye.length === 0){
-        alert("Can't find the person you're looking for")
-      }
-      else if(eye.length === 1){
-        return displayPeople(eye);
-      }
-      else{
-      var occupation = selectOccupation(eye);
-      if(occupation.length === 0){
-        alert("Can't find the person you're looking for")
-      }
-      else{
-        return displayPeople(occupation);
-      }
-    }
-    }
-    }
-  }
+ var gender = selectGender(people);
+ if(gender.length === 0){
+   alert("Can't find the person you're looking for")
+ }
+ else if(gender.length === 1){
+   return displayPeople(gender);
+ }
+ else{
+ var height = selectHeight(gender);
+ if(height.length === 0){
+ alert("Can't find the person you're looking for")
+ }
+ else if(height.length === 1){
+   return displayPeople(height);
+ }
+ else{
+ var weight = selectWeight(height);
+ if(weight.length === 0){
+   alert("Can't find the person you're looking for")
+ }
+ else if(weight.length === 1){
+   return displayPeople(weight);
+ }
+   else{
+ var eye = selectEye(weight);
+ if(eye.length === 0){
+   alert("Can't find the person you're looking for")
+ }
+ else if(eye.length === 1){
+   return displayPeople(eye);
+ }
+ else{
+ var occupation = selectOccupation(eye);
+ if(occupation.length === 0){
+   alert("Can't find the person you're looking for")
+ }
+ else if(occupation.length === 1)
+ {
+   return displayPeople(occupation);
+ }
+ else{
+ var age = selectAge(occupation);
+ if(age.length === 0){
+ alert("Can't find the person you're looking for")
+ }
+ else{
+   return displayPeople(age);
+ }
+}
+}
+}
+}
+}
 }
 
 
