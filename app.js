@@ -91,7 +91,8 @@ function mainMenu(person, people){
     displayPerson(person);
     break;
     case "family":
-    displayFamily(person);
+    var elFamilia = displayFamily(person, people);
+    displayPeople(elFamilia);
     // TODO: get person's family convert spouse number to name and convert parents number to name
     break;
     case "descendants":
@@ -142,12 +143,23 @@ function displayPerson(person){
   personInfo += "Age: " + person.age + "\n";
   alert(personInfo);
 }
-function displayFamily(person){
-  var personFamily = "Parents: " + displayNames(person.parents) + "\n";
-  personFamily += "CurrentSpouse: " + displayNames(person.currentSpouse) + "\n";
-  personFamily += "Children: " + displayNames(person.children) + "\n";
-  alert(personFamily);
+
+
+function displayFamily(person,people){
+  var parents = displayParents(person,people);
+  alert("Parents Are");
+  displayPeople(parents);
+  var spouse = displaySpouse(person,people);
+  alert("Spouse Are");
+  displayPeople(spouse);
+  var children = displayChildren(person,people);
+  alert("Children Are")
+  displayPeople(children);
+  var siblings = displaySiblings(person,people);
+  alert("Siblings Are");
+  displayPeople(siblings);
 }
+  
 
 function displayDescendants(person, people, descendantsArray = []){
   people.map(function(el){
@@ -378,3 +390,45 @@ function multipleTraits(people){
 }
 }
 }
+
+
+
+function displayParents(person, people){
+ var parents = people.filter(function(el){
+    if(person.parents[0] === el.id || person.parents[1] === el.id){
+      return true;
+    }
+    else{
+      return false;
+    }
+  });
+  return parents;
+}
+function displaySpouse(person, people){
+  var spouse = people.filter(function(el){
+    if(person.currentSpouse === el.id){
+      return true;
+    }
+    else{
+      return false;
+    }
+  });
+  return(spouse);
+}
+function displayChildren(person, people, childrenArray = []){
+  people.map(function(el){
+    if(el.parents[0] === person.id || el.parents[1] === person.id){
+      childrenArray.push(el);
+    }
+  });
+  return childrenArray;
+}
+function displaySiblings(person, people, siblingsArray = []){
+ people.map(function(el){
+    if(person.parents.length >= 1 && person.parents[0] === el.parents[0] || person.parents.length >= 1 && person.parents[1] === el.parents[1]){
+      siblingsArray.push(el);
+    }
+  });
+  return siblingsArray;
+}
+
