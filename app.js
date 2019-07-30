@@ -352,41 +352,41 @@ function multipleTraits(people){
     return displayPeople(gender);
   }
   else{
-  var height = selectHeight(gender);
-  if(height.length === 0){
-  alert("Can't find the person you're looking for")
-  }
-  else if(height.length === 1){
-    return displayPeople(height);
-  }
-  else{
-  var weight = selectWeight(height);
-  if(weight.length === 0){
-    alert("Can't find the person you're looking for")
-  }
-  else if(weight.length === 1){
-    return displayPeople(weight);
-  }
+    var height = selectHeight(gender);
+    if(height.length === 0){
+      alert("Can't find the person you're looking for")
+    }
+    else if(height.length === 1){
+      return displayPeople(height);
+    }
     else{
-  var eye = selectEye(weight);
-  if(eye.length === 0){
-    alert("Can't find the person you're looking for")
+      var weight = selectWeight(height);
+      if(weight.length === 0){
+        alert("Can't find the person you're looking for")
+      }
+      else if(weight.length === 1){
+        return displayPeople(weight);
+      }
+        else{
+      var eye = selectEye(weight);
+      if(eye.length === 0){
+        alert("Can't find the person you're looking for")
+      }
+      else if(eye.length === 1){
+        return displayPeople(eye);
+      }
+      else{
+      var occupation = selectOccupation(eye);
+      if(occupation.length === 0){
+        alert("Can't find the person you're looking for")
+      }
+      else{
+        return displayPeople(occupation);
+      }
+    }
+    }
+    }
   }
-  else if(eye.length === 1){
-    return displayPeople(eye);
-  }
-  else{
-  var occupation = selectOccupation(eye);
-  if(occupation.length === 0){
-    alert("Can't find the person you're looking for")
-  }
-  else{
-    return displayPeople(occupation);
-  }
-}
-}
-}
-}
 }
 
 
@@ -422,10 +422,13 @@ function displayChildren(person, people, childrenArray = []){
 }
 function displaySiblings(person, people, siblingsArray = []){
  people.map(function(el){
-    if(person.parents.length >= 1 && person.parents[0] === el.parents[0] || person.parents.length >= 1 && person.parents[1] === el.parents[1]){
+  for(var i = 0; i<person.parents.length; i++)
+    if(person.parents[i] === el.parents[i]){
       siblingsArray.push(el);
+    }
+    else{
+      return false;
     }
   });
   return siblingsArray;
 }
-
