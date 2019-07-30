@@ -22,6 +22,7 @@ Build all of your functions for displaying and gathering information below (GUI)
 
 function app(people)
 {
+
   function addAge()
 {
 for (let i = 0; i < people.length; i++)
@@ -37,7 +38,8 @@ if (monthMath < 0 || (monthMath === 0 && today.getDate() < birthDate.getDate()))
 people[i].age = age;
 }
 }
-addAge(people)
+addAge(people);
+
 
   var searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   switch(searchType)
@@ -55,7 +57,7 @@ addAge(people)
          var searchMultipleTraits = promptFor("Do you know multiple physical features?", yesNo).toLowerCase();
           switch (searchMultipleTraits)
       {
-            case 'yes': // function for multiple traits
+            case 'yes':
             var multipleArray = multipleTraits(people);
             break;
             case 'no' :
@@ -64,7 +66,8 @@ addAge(people)
       }
       break;
       case 'no':
-    alert("Then what do you expect us to do");
+    alert("Here is a list of everybody. Good luck!");
+    displayPeople(people);
     break;
     }
       default:
@@ -84,17 +87,16 @@ function mainMenu(person, people){
   }
   var displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
   switch(displayOption){
-    case "info": // convert date of birth to actual age
+    case "info":
     displayPerson(person);
-    // TODO: get person's info
     break;
     case "family":
     displayFamily(person);
     // TODO: get person's family convert spouse number to name and convert parents number to name
     break;
     case "descendants":
-    displayDescendant(person);
-    // TODO: get person's descendants
+    var descendantsList = displayDescendants(person, people);
+    displayPeople(descendantsList);
     break;
     case "restart":
     app(people); // restart
@@ -120,53 +122,42 @@ function searchByName(people){
   })
   return foundPerson[0];
 }
-  // TODO: find the person using the name they entered * Done
 
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
-    //This map just adds a space between names
     return person.firstName + " " + person.lastName;
   }).join("\n"));
 }
 
 function displayPerson(person){
-  // print all of the information about a person:
-  // height, weight, age, name, occupation, eye color.
   var personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
   personInfo += "Gender:" + person.gender + "\n";
   personInfo += "DOB:" + person.dob + "\n";
   personInfo += "Height:" + person.height + "\n";
   personInfo += "Weight:" + person.weight + "\n";
-  personInfo += "Eye Color:" + person.eyecolor + "\n";
+  personInfo += "Eye Color:" + person.eyeColor + "\n";
   personInfo += "Occupation:" + person.occupation + "\n";
   personInfo += "Age: " + person.age + "\n";
-  personInfo += "Descendants" + descendants(people) + "\n";
-  // TODO: finish getting the rest of the information to display * Done
   alert(personInfo);
 }
-//
 function displayFamily(person){
-  var personFamily = "Parents: " + person.parents + "\n";
-  personFamily += "CurrentSpouse: " + person.currentSpouse + "\n";
-  personFamily += "Children: " + person.children + "\n";
+  var personFamily = "Parents: " + displayNames(person.parents) + "\n";
+  personFamily += "CurrentSpouse: " + displayNames(person.currentSpouse) + "\n";
+  personFamily += "Children: " + displayNames(person.children) + "\n";
   alert(personFamily);
 }
-//
-var parentsId = descendants();
-function descendants(people){
-  return displayPeople();
-  if(person.parents === 0){
-  }
-  else{
-      return displayPeople(person.push)
-  }
-}
-descendants();
 
-  // var personDescendants = "Descendants: " + person.descendants;
-  // alert(personDescendants);
+function displayDescendants(person, people, descendantsArray = []){
+  people.map(function(el){
+    if(el.parents[0] == person.id || el.parents[1] == person.id){
+      descendantsArray.push(el);
+      displayDescendants(el, people, descendantsArray);
+    }
+  });
+  return descendantsArray;
+}
 
 // function that prompts and validates user input
 function promptFor(question, valid){
@@ -221,7 +212,7 @@ function oneTrait(people)
 
 function selectGender(people)
 {
-  var findGender = prompt("Please enter the person's gender male or female.  Else enter the word skip")
+  var findGender = prompt("Please enter the person's gender male or female. If you do not know, enter the word skip")
   var genderArray = people.filter(function(person)
   {
     if (findGender === person.gender){
@@ -238,12 +229,9 @@ function selectGender(people)
     return(genderArray);
 }
 
-// let test = selectGender(people);
-// let test2 = selectHeight(test);
-
 function selectHeight(people)
 {
-  var findHeight = prompt("Please enter the person's height in inches.  Else enter the wor skip")
+  var findHeight = prompt("Please enter the person's height in inches. If you do not know, enter the wor skip")
   var heightArray = people.filter(function(person)
   {
     if (findHeight == person.height){
@@ -262,7 +250,7 @@ function selectHeight(people)
 
 function selectWeight(people)
 {
-  var findWeight = prompt("Please enter the person's weight in lbs.  Else enter the word skip")
+  var findWeight = prompt("Please enter the person's weight in lbs. If you do not know, enter the wor skip")
   var weightArray = people.filter(function(person)
   {
     if (findWeight == person.weight){
@@ -281,7 +269,7 @@ function selectWeight(people)
 
 function selectEye(people)
 {
-  var findEye = prompt("Please enter the person's eye color.  Else enter the word skip")
+  var findEye = prompt("Please enter the person's eye color. If you do not know, enter the wor skip")
   var eyeArray = people.filter(function(person)
   {
     if (findEye === person.eyeColor){
@@ -300,7 +288,7 @@ function selectEye(people)
 
 function selectOccupation(people)
 {
-  var findOccupation = prompt("Please enter the person's occupation.  Else enter the word skip")
+  var findOccupation = prompt("Please enter the person's occupation. If you do not know, enter the wor skip")
   var occupationArray = people.filter(function(person)
   {
     if (findOccupation === person.occupation){
